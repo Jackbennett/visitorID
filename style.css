@@ -1,0 +1,33 @@
+.content{
+    width: 720px;
+    margin: 0 auto;
+}
+
+.preview{
+
+}
+.preview .outline{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    border: 1px solid #0d0d0d
+}
+.outline .photo{
+    align-self: flex-end;
+}
+@page{
+    size: 85mm 55mm landscape;
+    margin: 0;
+}
+@media print{
+    body{
+        width: 85mm;
+        height: 55mm;
+    }
+    form{
+        display: none;
+    }
+    legend{
+        display: none;
+    }
+}

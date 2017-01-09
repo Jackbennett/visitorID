@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/node_modules/gridforms/gridforms/gridforms.css">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+
+  <div class="content" id="register">
+    <form action="" class="grid-form">
+      <fieldset>
+        <legend>Create Visitor Badge</legend>
+          <div data-row-span="2">
+            <div data-field-span="1">
+              <label for="visitor">Full Name</label><input type="text" name=visitor v-model="visitor" placeholder="e.g. John Smith">
+            </div>
+            <div data-field-span="1">
+              <label for="corp">Company</label><input type="text" name=corp v-model="corp" placeholder="e.g. Initech">
+            </div>
+          </div>
+      </fieldset>
+      <fieldset>
+        <legend>Photo ID</legend>
+          <div data-field-span="1" v-on:click="photoID">
+            <label for="photograph"></label><video id=photograph name=photograph width=300 height=300></video>
+          </div>
+      </fieldset>
+    </form>
+    <div class="preview">
+      <div class="outline">
+        <div class="cretentials">
+          <h1>{{ visitor }}</h1>
+          <h2>{{ corp }}</h2>
+        </div>
+        <div class="photo">
+          <canvas width=400 height=300></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#register',
+      data: {
+        visitor: "",
+        corp: ""
+      },
+      methods: {
+        photoID: function(){
+          var video = document.querySelector("#photograph");
+          var canvas = document.querySelector(".photo canvas");
+          canvas.getContext("2d").drawImage(video, 0, 0, 600, 600, 0, 0, 300, 300);
+          var img = canvas.toDataURL("image/png");
+        }
+      }
+    })
+  </script>
+  <script defer>
+    navigator.getUserMedia({ video: true }, function (stream) {
+      var video = document.querySelector("#photograph");
+      var canvas = document.querySelector(".photo canvas");
+      video.srcObject = stream;
+      video.play();
+    }, function (err) { alert("there was an error " + err) });
+  </script>
+</body>
+</html>
