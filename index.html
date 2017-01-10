@@ -6,65 +6,107 @@
   <link rel="stylesheet" href="/node_modules/gridforms/gridforms/gridforms.css">
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
 </head>
-<body>
 
-  <div class="content" id="register">
+<body>
+<!-- Inline Icons -->
+<svg style="display:none">
+  <symbol id="icon-camera" viewBox="0 0 24 24">
+  <title>camera</title>
+  <path class="path1" d="M8 2h8l2 3h3q1.242 0 2.121 0.895t0.879 2.137v10.984q0 1.242-0.879 2.113t-2.121 0.871h-18q-1.242 0-2.121-0.879t-0.879-2.121v-10.984q0-1.242 0.879-2.129t2.121-0.887h3zM12 8q1.016 0 1.941 0.398t1.594 1.066 1.066 1.594 0.398 1.941-0.398 1.941-1.066 1.594-1.594 1.066-1.941 0.398-1.941-0.398-1.594-1.066-1.066-1.594-0.398-1.941 0.398-1.941 1.066-1.594 1.594-1.066 1.941-0.398zM12 10q-1.242 0-2.121 0.879t-0.879 2.121 0.879 2.121 2.121 0.879 2.121-0.879 0.879-2.121-0.879-2.121-2.121-0.879zM16.93 7l-1.961-3h-5.898l-2 3h-4.070q-0.414 0-0.707 0.297t-0.293 0.719v10.984q0 0.414 0.293 0.707t0.707 0.293h18q0.422 0 0.711-0.285t0.289-0.699v-10.984q0-0.422-0.297-0.727t-0.703-0.305h-4.070z"></path>
+  </symbol>
+</svg>
+  <div id="badge">
+    <div id="preview">
+      <h1 v-bind:class="crb">{{ supply ? 'Supply Teacher' : 'Visitor' }}</h1>
+      <div class="details">
+        <p><small>Name</small><br>{{ visitor ? visitor : 'Long Dafualt name for testing card design' }}</p>
+        <p><small v-if="corp">Company</small><br>{{ corp }}</p>
+        <small>{{ now }}</small>
+      </div>
+      <div class="picture">
+        <img id="photo" alt="ID Badge Photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 1h16q1.242 0 2.121 0.879t0.879 2.121v16q0 1.242-0.879 2.121t-2.121 0.879h-16q-1.242 0-2.121-0.879t-0.879-2.121v-16q0-1.242 0.879-2.121t2.121-0.879zM21 17.414l-5-5-8.586 8.586h12.586q0.414 0 0.707-0.293t0.293-0.707v-2.586zM20 3h-16q-0.414 0-0.707 0.293t-0.293 0.707v16q0 0.414 0.293 0.707t0.707 0.293h0.586l11.414-11.414 5 5v-10.586q0-0.414-0.293-0.707t-0.707-0.293zM8 5q1.242 0 2.121 0.879t0.879 2.121-0.879 2.121-2.121 0.879-2.121-0.879-0.879-2.121 0.879-2.121 2.121-0.879zM8 7q-0.414 0-0.707 0.293t-0.293 0.707 0.293 0.707 0.707 0.293 0.707-0.293 0.293-0.707-0.293-0.707-0.707-0.293z'%3E%3C/path%3E%3C/svg%3E">
+      </div>
+    </div>
+
     <form action="" class="grid-form">
       <fieldset>
-        <legend>Create Visitor Badge</legend>
-          <div data-row-span="2">
-            <div data-field-span="1">
-              <label for="visitor">Full Name</label><input type="text" name=visitor v-model="visitor" placeholder="e.g. John Smith">
-            </div>
-            <div data-field-span="1">
-              <label for="corp">Company</label><input type="text" name=corp v-model="corp" placeholder="e.g. Initech">
-            </div>
+        <legend>Visitor Details</legend>
+        <div data-row-span="2">
+          <div data-field-span="1">
+            <label for="visitor">Full Name</label><input type="text" name=visitor v-model="visitor" placeholder="e.g. John Smith">
           </div>
+          <div data-field-span="1">
+            <label for="corp">Company</label><input type="text" name=corp v-model="corp" placeholder="e.g. Initech">
+          </div>
+        </div>
+        <div data-row-span="1">
+          <div data-field-span="1">
+            <label for="reason">Reason For Visit</label><textarea name=reason v-model="reason" placeholder="e.g. Visit to see head of year..."></textarea>
+          </div>
+        </div>
+        <div data-row-span="3">
+          <div data-field-span="2" class="item-list">
+            <label for="dbs">DBS Check <small>(previously CRB)</small></label>
+            <label><input type="radio" name=crb v-model=crb value="false">N/A</label>
+            <label><input type="radio" name=crb v-model=crb value="pending">Documents Supplied</label>
+            <label><input type="radio" name=crb v-model=crb value="accepted">Provided</label>
+          </div>
+        <!--</div>
+        <div data-row-span="1">-->
+          <div data-field-span="1" class="item-list">
+            <label for="dbs">Supply Teacher</small></label>
+            <label><input type="checkbox" name=supply v-model=supply>Yes</label>
+          </div>
+        </div>
       </fieldset>
       <fieldset>
         <legend>Photo ID</legend>
-          <div data-field-span="1" v-on:click="photoID">
-            <label for="photograph"></label><video id=photograph name=photograph width=300 height=300></video>
-          </div>
+        <div data-field-span="1" id=photograph v-on:click="photoID">
+          <video id="capture" name=photograph width=auto height=auto></video>
+          <svg class="icon icon-camera"><use xlink:href="#icon-camera"></use></svg>
+        </div>
       </fieldset>
     </form>
-    <div class="preview">
-      <div class="outline">
-        <div class="cretentials">
-          <h1>{{ visitor }}</h1>
-          <h2>{{ corp }}</h2>
-        </div>
-        <div class="photo">
-          <canvas width=400 height=300></canvas>
-        </div>
-      </div>
-    </div>
   </div>
 
+  <canvas id="createImage" width=300 height=300 style="display:none"></canvas>
   <script>
     new Vue({
-      el: '#register',
+      el: '#badge',
       data: {
         visitor: "",
-        corp: ""
+        corp: "",
+        reason: "",
+        crb: "false",
+        supply: false,
+      },
+      computed:{
+        now: function(){
+          var d = new Date
+          return d.toLocaleString()
+        }
       },
       methods: {
         photoID: function(){
-          var video = document.querySelector("#photograph");
-          var canvas = document.querySelector(".photo canvas");
-          canvas.getContext("2d").drawImage(video, 0, 0, 600, 600, 0, 0, 300, 300);
-          var img = canvas.toDataURL("image/png");
+          var video = document.querySelector("#capture");
+          var target = document.querySelector('#photo')
+          var canvas = document.querySelector("#createImage");
+          canvas.width = target.clientWidth
+          canvas.height = target.clientHeight
+          canvas.getContext("2d")
+            .drawImage(video, 0, 0, video.clientWidth, video.clientHeight, 0, 0, target.clientWidth, target.clientHeight);
+          document.querySelector("#photo").src = canvas.toDataURL("image/png")
         }
+      },
+      mounted: function () {
+        navigator.getUserMedia({ video: true }, function (stream) {
+          var video = document.querySelector("#capture");
+          video.srcObject = stream;
+          video.play();
+        }, function (err) { alert("there was an error " + err) });
       }
     })
   </script>
-  <script defer>
-    navigator.getUserMedia({ video: true }, function (stream) {
-      var video = document.querySelector("#photograph");
-      var canvas = document.querySelector(".photo canvas");
-      video.srcObject = stream;
-      video.play();
-    }, function (err) { alert("there was an error " + err) });
-  </script>
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "visitorid",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.2.0",
+  "description": "Generate a visitor ID Badge tempalte to print off. Now accomodates DBS Status and Supply Teachers ID",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

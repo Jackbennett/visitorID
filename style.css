@@ -1,33 +1,106 @@
-.content{
-    width: 720px;
-    margin: 0 auto;
+html,body{
+    margin:0;
+    padding:0;
+    height: 100%;
 }
-
-.preview{
-
-}
-.preview .outline{
+body,#badge{
     display: flex;
+    width:100%;
+    min-height:100%;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.grid-form{
+    display: flex;
+    width: 100%;
+    border-top: 1px solid rgb(51, 51, 51);
+}
+fieldset{
+    flex: 1;
+}
+
+#photograph {
+    position: relative
+}
+#photograph video, #photograph svg{
+    width: 100%    !important;
+    height: auto   !important;
+    cursor: pointer;
+}
+#photograph svg{
+    position: absolute;
+    fill: #fff;
+    visibility: hidden;
+    top: 35%;
+}
+#photograph video:hover ~ svg,#photograph svg:hover{
+    visibility:visible;
+}
+input,textarea,label{
+    font-family: Arial;
+}
+#preview{
+    display: flex;
+    width: 85mm;
+    height: 55mm;
+    flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: row;
-    border: 1px solid #0d0d0d
+    padding: .5em;
+    border: 1px solid rgb(51, 51, 51);
 }
-.outline .photo{
-    align-self: flex-end;
+    #preview h1{
+        width:100%;
+        margin:.2em 0 .5em;
+        -webkit-print-color-adjust: exact;
+    }
+    .pending{
+        background-color: rgb(4, 181, 64);
+        background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,1) 35px, rgba(255,255,255,1) 70px);
+    }
+    .accepted{
+        background-color: rgb(4, 181, 64);
+    }
+    #preview .details{
+        flex:3;
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .details p{
+        margin-top:0;
+    }
+    .details small:last-child{
+        margin-top:auto;
+    }
+    .picture{
+        flex:2;
+        width: 100%;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.item-list label{
+    padding-right: 1em;
 }
 @page{
     size: 85mm 55mm landscape;
     margin: 0;
 }
 @media print{
-    body{
+    body,#badge{
+        align-items: center;
+        justify-content: center;
+    }
+    #preview{
         width: 85mm;
         height: 55mm;
+        border: none;
     }
-    form{
-        display: none;
-    }
-    legend{
+    .grid-form{
         display: none;
     }
 }
