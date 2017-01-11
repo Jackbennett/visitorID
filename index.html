@@ -19,8 +19,8 @@
     <div id="preview">
       <h1 v-bind:class="crb">{{ supply ? 'Supply Teacher' : 'Visitor' }}</h1>
       <div class="details">
-        <p><small>Name</small><br>{{ visitor ? visitor : 'Long Dafualt name for testing card design' }}</p>
-        <p><small v-if="corp">Company</small><br>{{ corp }}</p>
+        <p><small>Name</small><br>{{ visitor ? visitor : '' }}</p>
+        <p v-if="corp"><small>Company</small><br>{{ corp }}</p>
         <small>{{ now }}</small>
       </div>
       <div class="picture">
@@ -94,7 +94,7 @@
           canvas.width = target.clientWidth
           canvas.height = target.clientHeight
           canvas.getContext("2d")
-            .drawImage(video, 0, 0, video.clientWidth, video.clientHeight, 0, 0, target.clientWidth, target.clientHeight);
+            .drawImage(video, 30, 80, video.videoWidth - 60, video.videoHeight-0, 0, 0, target.clientWidth, target.clientHeight);
           document.querySelector("#photo").src = canvas.toDataURL("image/png")
         }
       },

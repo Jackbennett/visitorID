@@ -27,6 +27,7 @@ fieldset{
 #photograph video, #photograph svg{
     width: 100%    !important;
     height: auto   !important;
+    max-width:550px;
     cursor: pointer;
 }
 #photograph svg{
@@ -34,6 +35,7 @@ fieldset{
     fill: #fff;
     visibility: hidden;
     top: 35%;
+    left: 0;
 }
 #photograph video:hover ~ svg,#photograph svg:hover{
     visibility:visible;
@@ -71,6 +73,7 @@ input,textarea,label{
     }
     .details p{
         margin-top:0;
+        border-bottom: 1px solid rgb(51, 51, 51);
     }
     .details small:last-child{
         margin-top:auto;
