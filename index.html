@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome to Vue</title>
+  <title>Visitor Welcome</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="/node_modules/gridforms/gridforms/gridforms.css">
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -19,8 +19,8 @@
     <div id="preview">
       <h1 class="dbs" v-bind:class="dbs">{{ supply ? 'Supply Teacher' : 'Visitor' }}</h1>
       <div class="details">
-        <p><small>Name</small><br>{{ visitor ? visitor : '&nbsp;' }}</p>
-        <p v-if="corp"><small>Company</small><br>{{ corp }}</p>
+        <p><small>Name</small><br>{{ name ? name : '&nbsp;' }}</p>
+        <p v-if="company"><small>Company</small><br>{{ company }}</p>
         <small>{{ now }}</small>
       </div>
       <div class="picture">
@@ -33,10 +33,10 @@
         <legend>Visitor Details</legend>
         <div data-row-span="2" v-on:click="reverify">
           <div data-field-span="1">
-            <label for="visitor">Full Name</label><input type="text" id=visitor name=visitor v-model="visitor" placeholder="e.g. John Smith">
+            <label for="name">Full Name</label><input type="text" id=name name=name v-model="name" placeholder="e.g. John Smith">
           </div>
           <div data-field-span="1">
-            <label for="corp">Company</label><input type="text" id=corp name=corp v-model="corp" placeholder="e.g. Initech">
+            <label for="company">Company</label><input type="text" id=company name=company v-model="company" placeholder="e.g. Initech">
           </div>
         </div>
         <div data-row-span="1" v-on:click="reverify">
@@ -63,8 +63,8 @@
             <label for="verify"><input type="checkbox" id=verify name=verify v-model=verify>Yes</label>
           </div>
           <div data-field-span="1" class="item-list" v-if="verify">
-            <label for="print">Print your ID</small></label>
-            <input type="button" id=print name=print value=printMe>
+            <label for="finish">Finish your ID</small></label>
+            <input type="button" id=finish name=finish value=Finish v-on:click=finish>
           </div>
         </div>
       </fieldset>
@@ -82,10 +82,10 @@
     var badge = new Vue({
       el: '#badge',
       data: {
-        visitor: "",
-        corp: "",
+        name: "",
+        company: "",
         reason: "",
-        dbs: "false",
+        dbs: "one",
         supply: false,
         verify: false,
       },
@@ -109,6 +109,10 @@
         , reverify: function(){
           this.verify = false
         }
+        , finish: function(){
+          this.inTime = Date.now()
+          list.visitors.push(this)
+        }
       },
       mounted: function () {
         navigator.getUserMedia({ video: true }, function (stream) {
@@ -118,6 +122,49 @@
         }, function (err) { console.error("Error opening camera: " + err) });
       }
     })
+  </script>
+
+  <div id="list">
+    <p>List currently on-site visitors.</p>
+    <table id="view">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Time In</th>
+          <th>Time Out</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Reason</th>
+        </tr>
+        <tr v-for="v in visitors">
+          <td>{{ v.id }}</td>
+          <td>{{ v.type }}</td>
+          <td>{{ v.inTime }}</td>
+          <td>{{ v.outTime }}</td>
+          <td>{{ v.name }}</td>
+          <td>{{ v.company }}</td>
+          <td>{{ v.reason }}</td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <script>
+  var list = new Vue({
+    el: '#list',
+    data: {
+      visitors: [{
+        "id": 0,
+        "type": "visitor",
+        "inTime": Date.now(),
+        "name": "Demonstration Visitor",
+        "company": "BENO Design",
+        "reason": "Product demonstration of visitor record keeping and badge creation system",
+      }]
+    }
+  })
   </script>
 
 </body>
