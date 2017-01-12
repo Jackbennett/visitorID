@@ -19,7 +19,7 @@
     <div id="preview">
       <h1 class="dbs" v-bind:class="dbs">{{ supply ? 'Supply Teacher' : 'Visitor' }}</h1>
       <div class="details">
-        <p><small>Name</small><br>{{ visitor ? visitor : '' }}</p>
+        <p><small>Name</small><br>{{ visitor ? visitor : '&nbsp;' }}</p>
         <p v-if="corp"><small>Company</small><br>{{ corp }}</p>
         <small>{{ now }}</small>
       </div>
@@ -33,15 +33,16 @@
         <legend>Visitor Details</legend>
         <div data-row-span="2">
           <div data-field-span="1">
-            <label for="visitor">Full Name</label><input type="text" name=visitor v-model="visitor" placeholder="e.g. John Smith">
+            <label for="visitor">Full Name</label><input type="text" id=visitor name=visitor v-model="visitor" placeholder="e.g. John Smith">
           </div>
           <div data-field-span="1">
-            <label for="corp">Company</label><input type="text" name=corp v-model="corp" placeholder="e.g. Initech">
+            <label for="corp">Company</label><input type="text" id=corp name=corp v-model="corp" placeholder="e.g. Initech">
           </div>
         </div>
         <div data-row-span="1">
           <div data-field-span="1">
-            <label for="reason">Reason For Visit</label><textarea name=reason v-model="reason" placeholder="e.g. Visit to see head of year..."></textarea>
+            <label for="reason">Reason For Visit</label>
+            <textarea id=reason name=reason v-model="reason" placeholder="e.g. Visit to see head of year..."></textarea>
           </div>
         </div>
         <div data-row-span="3">
@@ -51,11 +52,19 @@
             <label><input type="radio" name=dbs v-model=dbs value="two">Limited</label>
             <label><input type="radio" name=dbs v-model=dbs value="three">Full</label>
           </div>
-        <!--</div>
-        <div data-row-span="1">-->
           <div data-field-span="1" class="item-list">
-            <label for="dbs">Supply Teacher</small></label>
-            <label><input type="checkbox" name=supply v-model=supply>Yes</label>
+            <label for="supply">Supply Teacher</small></label>
+            <label for="supply"><input type="checkbox" id=supply name=supply v-model=supply>Yes</label>
+          </div>
+        </div>
+        <div data-row-span="2">
+          <div data-field-span="1" class="item-list">
+            <label for="verify">Details correct?</small></label>
+            <label for="verify"><input type="checkbox" id=verify name=verify v-model=verify>Yes</label>
+          </div>
+          <div data-field-span="1" class="item-list" v-if="verify">
+            <label for="print">Print your ID</small></label>
+            <input type="button" id=print name=print value=printMe>
           </div>
         </div>
       </fieldset>
@@ -68,10 +77,9 @@
       </fieldset>
     </form>
   </div>
-
   <canvas id="createImage" width=300 height=300 style="display:none"></canvas>
   <script>
-    new Vue({
+    var badge = new Vue({
       el: '#badge',
       data: {
         visitor: "",
@@ -79,6 +87,7 @@
         reason: "",
         dbs: "false",
         supply: false,
+        verify: false,
       },
       computed:{
         now: function(){
@@ -103,7 +112,7 @@
           var video = document.querySelector("#capture");
           video.srcObject = stream;
           video.play();
-        }, function (err) { alert("there was an error " + err) });
+        }, function (err) { console.error("Error opening camera: " + err) });
       }
     })
   </script>
