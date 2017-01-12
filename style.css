@@ -58,11 +58,12 @@ input,textarea,label{
         margin:.2em 0 .5em;
         -webkit-print-color-adjust: exact;
     }
-    .pending{
+    /*DBS Value type styles*/
+    .dbs.two{
         background-color: rgb(4, 181, 64);
         background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,1) 35px, rgba(255,255,255,1) 70px);
     }
-    .accepted{
+    .dbs.three{
         background-color: rgb(4, 181, 64);
     }
     #preview .details{
