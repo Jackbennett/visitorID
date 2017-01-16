@@ -45,7 +45,11 @@
             <textarea id=reason name=reason v-model="reason" placeholder="e.g. Visit to see head of year..."></textarea>
           </div>
         </div>
-        <div data-row-span="3" v-on:click="reverify">
+        <div data-row-span="4" v-on:click="reverify">
+          <div data-field-span="1" class="item-list">
+            <label for="vreg">Vehicle Registration</label>
+            <input type="text" name="vreg" id="vreg" v-model=vreg placeholder="e.g. BD51 SMR">
+          </div>
           <div data-field-span="2" class="item-list">
             <label for="dbs">DBS Check <small>(previously CRB)</small></label>
             <label><input type="radio" name=dbs v-model=dbs value="one">None</label>
@@ -93,6 +97,7 @@
         now: function(){
           var d = new Date
           return d.toLocaleString()
+          vreg: "",
         }
       },
       methods: {
@@ -135,6 +140,7 @@
           <th>Time Out</th>
           <th>Name</th>
           <th>Company</th>
+          <th>Vehicle Registration</th>
           <th>Reason</th>
         </tr>
         <tr v-for="v in visitors">
@@ -144,6 +150,7 @@
           <td>{{ v.outTime }}</td>
           <td>{{ v.name }}</td>
           <td>{{ v.company }}</td>
+          <td>{{ v.vreg }}</td>
           <td>{{ v.reason }}</td>
         </tr>
       </thead>
