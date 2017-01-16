@@ -85,19 +85,21 @@
   <script>
     var badge = new Vue({
       el: '#badge',
-      data: {
-        name: "",
-        company: "",
-        reason: "",
-        dbs: "one",
-        supply: false,
-        verify: false,
       },
       computed:{
         now: function(){
           var d = new Date
           return d.toLocaleString()
+      data: function(){
+        return {
+          name: "",
+          company: "",
           vreg: "",
+          reason: "",
+          dbs: "one",
+          supply: false,
+          verify: false,
+          inTime: new Date
         }
       },
       methods: {
@@ -116,7 +118,12 @@
         }
         , finish: function(){
           this.inTime = Date.now()
-          list.visitors.push(this)
+          // Create a new object from the form values
+          list.visitors.push( JSON.parse( JSON.stringify(this.$data) ) )
+          this.reset()
+        }
+        , reset: function(){
+          Object.assign(this.$data, this.$options.data())
         }
       },
       mounted: function () {
