@@ -12,6 +12,11 @@ body,#badge{
     flex-direction: column;
 }
 
+/*Colour pallet*/
+.col-fullDBS { color: green; }
+.col-limitedDBS { color: orange; }
+.col-noDBS { color: darkred; }
+
 .grid-form{
     display: flex;
     width: 100%;
